@@ -13,7 +13,7 @@ class Bucket {
   Bucket(this.title, this.location); // 생성자
 }
 
-/// 홈 페이지
+/// 메인 페이지
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 

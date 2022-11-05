@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:haru_market/main_page.dart';
 
+// 상품 상세 페이지
 class PostDetailPage extends StatefulWidget {
   const PostDetailPage({Key? key}) : super(key: key);
 

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'main_page.dart';
 
+/// 설치 페이지
+
 /// 로그인 페이지
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
