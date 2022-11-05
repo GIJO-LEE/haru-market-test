@@ -7,6 +7,7 @@ import 'login_page.dart';
 import 'main_page.dart';
 
 void main() {
+  // MyApp
   runApp(MyApp());
 }
 
