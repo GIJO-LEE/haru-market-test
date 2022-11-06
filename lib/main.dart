@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'create_post_page.dart';
+import 'initial_page.dart';
 import 'post_detail_page.dart';
 import 'login_page.dart';
 import 'main_page.dart';
@@ -19,11 +20,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'haru-market',
-        initialRoute: LoginPage.routeName,
+        initialRoute: InitialPage.routeName,
         routes: routes);
   }
 
   final routes = {
+    InitialPage.routeName: (context) => InitialPage(),
     LoginPage.routeName: (context) => LoginPage(),
     HomePage.routeName: (context) => HomePage(),
     CreatePostPage.routeName: (context) => CreatePostPage(),
