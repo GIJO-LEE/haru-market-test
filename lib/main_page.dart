@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:haru_market/post_detail_page.dart';
 
+import 'post_detail_page.dart';
 import 'create_post_page.dart';
 
 /// 버킷 클래스
@@ -96,10 +96,7 @@ class _HomePageState extends State<HomePage> {
                   subtitle: Text(bucket.location),
                   onTap: () {
                     // 판매리스트 상세페이지로 이동
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => PostDetailPage()),
-                    );
+                    Navigator.pushNamed(context, PostDetailPage.routeName);
                   },
                 );
               },

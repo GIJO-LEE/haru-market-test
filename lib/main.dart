@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'haru-market',
         initialRoute: InitialPage.routeName,
+        // onGenerateRoute: generateRoute,
         routes: routes);
   }
 
@@ -31,4 +32,22 @@ class MyApp extends StatelessWidget {
     CreatePostPage.routeName: (context) => CreatePostPage(),
     PostDetailPage.routeName: (context) => PostDetailPage(),
   };
+
+  // Route? generateRoute(RouteSettings routeSettings) {
+  //   switch (routeSettings.name) {
+  //     // PostDetailPage 로 이동 시, argument 전달
+  //     case PostDetailPage.routeName:
+  //       return MaterialPageRoute(
+  //         builder: (context) {
+  //           var map = routeSettings.arguments as Map<String, dynamic>;
+  //           return PostDetailPage(
+  //             input_bucket: map['input_bucket'] as Bucket,
+  //           );
+  //         },
+  //         settings: routeSettings,
+  //       );
+  //     default:
+  //       return null;
+  //   }
+  // }
 }
