@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:timer_builder/timer_builder.dart';
 
 import 'main_page.dart';
@@ -38,17 +39,17 @@ class PostDetailPage extends StatefulWidget {
 
 class _PostDetailPageState extends State<PostDetailPage> {
   final curr_time = DateTime.now();
-  DateTime register_time = DateTime.parse("2022-11-07 00:00:00");
-
-  // final diff_time = curr_time.difference(register_time);
+  DateTime register_time = DateTime.parse('2022-11-19 15:00:00');
 
   Post post = Post("10/20에 구매한 아이폰 13 Pro Max 팔아요", "상품상세설명1", "강남구 신사동", "삼성");
   Seller seller = Seller("스파르타", "https://i.ibb.co/CwzHq4z/trans-logo-512.png");
 
-  // String register_date = DateFormat('yyyy.MM.dd').format(post.registerDatetime);
-
   @override
   Widget build(BuildContext context) {
+    String remain_days = Jiffy(register_time).endOf(Units.DAY).fromNow();
+    String remain_hours = Jiffy(register_time).endOf(Units.HOUR).fromNow();
+    String remain_mins = Jiffy(register_time).endOf(Units.MINUTE).fromNow();
+
     return Scaffold(
       appBar: AppBar(
         // 뒤로가기 버튼
@@ -103,6 +104,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
               trailing: TimerBuilder.periodic(
                 const Duration(seconds: 1),
                 builder: (context) {
+                  // 함수 작성 후 return Text에 넣기!!
                   return Text(
                     DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
                     style: const TextStyle(

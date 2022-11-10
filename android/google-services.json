@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "687602266687",
+    "project_id": "harumarket-d001b",
+    "storage_bucket": "harumarket-d001b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687602266687:android:e87fb4f879d7e8881afe8a",
+        "android_client_info": {
+          "package_name": "com.harumarkets.auction_second_hand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687602266687-hsviguq8cifr1a2jrdu1082mnne1b3k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCept4Il7buBwp3L0pwIYOjcEFh9O-MTy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687602266687-hsviguq8cifr1a2jrdu1082mnne1b3k1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "687602266687-33jgce69hvv322ao1tn386mn2l0aqj5f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.haruMarket"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
