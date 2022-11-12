@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'auth_service.dart';
+import 'login_page.dart';
 import 'post_detail_page.dart';
 import 'create_post_page.dart';
 
@@ -77,6 +80,25 @@ class _HomePageState extends State<HomePage> {
           Icon(
             Icons.notifications_outlined,
           ),
+          // 로그아웃 텍스트 버튼
+          TextButton(
+            child: Text(
+              "로그아웃",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () {
+              // 로그아웃
+              context.read<AuthService>().signOut();
+              // 로그아웃 시 로그인 페이지로 이동
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LoginPage.routeName,
+                (route) => false,
+              );
+            },
+          )
         ],
       ),
       body: bucketList.isEmpty

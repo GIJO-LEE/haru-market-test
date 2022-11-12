@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Consumer<AuthService>(
       builder: (context, authService, child) {
+        final user = authService.currentUser();
         return Scaffold(
           appBar: AppBar(title: Text("로그인")),
           body: SingleChildScrollView(
@@ -35,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                 /// 현재 유저 로그인 상태
                 Center(
                   child: Text(
-                    "로그인해 주세요 🙂",
+                    user == null ? "로그인해 주세요 🙂" : "${user.email}님 안녕하세요 👋",
                     style: TextStyle(
                       fontSize: 24,
                     ),
@@ -61,12 +62,29 @@ class _LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                   child: Text("로그인", style: TextStyle(fontSize: 21)),
                   onPressed: () {
-                    // 로그인 성공시 HomePage로 이동
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      HomePage.routeName,
-                      (route) => false,
-                      // arguments: {"update": true}
+                    // 로그인
+                    authService.signIn(
+                      email: emailController.text,
+                      password: passwordController.text,
+                      onSuccess: () {
+                        // 로그인 성공
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("로그인 성공"),
+                        ));
+                        // 로그인 성공시 HomePage로 이동
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          HomePage.routeName,
+                          (route) => false,
+                          // arguments: {"update": true}
+                        );
+                      },
+                      onError: (err) {
+                        // 에러 발생
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(err),
+                        ));
+                      },
                     );
                   },
                 ),
