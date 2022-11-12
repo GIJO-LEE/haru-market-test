@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:timer_builder/timer_builder.dart';
 
 import 'main_page.dart';
@@ -38,18 +36,33 @@ class PostDetailPage extends StatefulWidget {
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
-  final curr_time = DateTime.now();
-  DateTime register_time = DateTime.parse('2022-11-19 15:00:00');
+  DateTime register_time = DateTime.parse('2022-11-12 00:30:00');
 
   Post post = Post("10/20에 구매한 아이폰 13 Pro Max 팔아요", "상품상세설명1", "강남구 신사동", "삼성");
   Seller seller = Seller("스파르타", "https://i.ibb.co/CwzHq4z/trans-logo-512.png");
 
+  String calculateRemainTime(DateTime register_time) {
+    Duration remain_time = register_time.difference(DateTime.now());
+    int remain_days = remain_time.inDays;
+    int remain_hours = remain_time.inHours;
+    int remain_mins = remain_time.inMinutes;
+    int remain_secs = remain_time.inSeconds;
+
+    if (remain_days > 0) {
+      return remain_days.toString() + '일 남음';
+    } else if (remain_hours > 0) {
+      return remain_hours.toString() + '시간 남음';
+    } else if (remain_secs > 0) {
+      return remain_mins.toString() +
+          '분 ' +
+          (remain_secs % 60).toString() +
+          '초';
+    }
+    return "over time";
+  }
+
   @override
   Widget build(BuildContext context) {
-    String remain_days = Jiffy(register_time).endOf(Units.DAY).fromNow();
-    String remain_hours = Jiffy(register_time).endOf(Units.HOUR).fromNow();
-    String remain_mins = Jiffy(register_time).endOf(Units.MINUTE).fromNow();
-
     return Scaffold(
       appBar: AppBar(
         // 뒤로가기 버튼
@@ -100,13 +113,13 @@ class _PostDetailPageState extends State<PostDetailPage> {
               title: Text(seller.nickName),
               // 판매 위치 정보
               subtitle: Text(post.location),
-              // 판매 시작 날짜
+              // 판매 시작
               trailing: TimerBuilder.periodic(
                 const Duration(seconds: 1),
                 builder: (context) {
                   // 함수 작성 후 return Text에 넣기!!
                   return Text(
-                    DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()),
+                    calculateRemainTime(register_time),
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
