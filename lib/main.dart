@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
+import 'bucket_service.dart';
 import 'create_post_page.dart';
 import 'initial_page.dart';
 import 'post_detail_page.dart';
@@ -20,6 +21,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => BucketService()),
       ],
       child: MyApp(),
     ),

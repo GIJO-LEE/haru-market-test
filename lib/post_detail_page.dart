@@ -36,7 +36,7 @@ class PostDetailPage extends StatefulWidget {
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
-  DateTime register_time = DateTime.parse('2022-11-12 00:30:00');
+  DateTime register_time = DateTime.parse('2022-11-18 21:50:00');
 
   Post post = Post("10/20에 구매한 아이폰 13 Pro Max 팔아요", "상품상세설명1", "강남구 신사동", "삼성");
   Seller seller = Seller("스파르타", "https://i.ibb.co/CwzHq4z/trans-logo-512.png");

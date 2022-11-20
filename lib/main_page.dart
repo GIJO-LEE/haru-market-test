@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:haru_market/bucket_service.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
@@ -70,70 +71,75 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Text("신사동"),
-        actions: [
-          Icon(
-            Icons.search_outlined,
-          ),
-          Icon(
-            Icons.notifications_outlined,
-          ),
-          // 로그아웃 텍스트 버튼
-          TextButton(
-            child: Text(
-              "로그아웃",
-              style: TextStyle(
-                color: Colors.white,
+    return Consumer<BucketService>(
+      builder: (context, bucketService, child) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: Text("신사동"),
+            actions: [
+              Icon(
+                Icons.search_outlined,
               ),
-            ),
-            onPressed: () {
-              // 로그아웃
-              context.read<AuthService>().signOut();
-              // 로그아웃 시 로그인 페이지로 이동
-              Navigator.pushNamedAndRemoveUntil(
+              Icon(
+                Icons.notifications_outlined,
+              ),
+              // 로그아웃 텍스트 버튼
+              TextButton(
+                child: Text(
+                  "로그아웃",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () {
+                  // 로그아웃
+                  context.read<AuthService>().signOut();
+                  // 로그아웃 시 로그인 페이지로 이동
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    LoginPage.routeName,
+                    (route) => false,
+                  );
+                },
+              )
+            ],
+          ),
+          body: bucketList.isEmpty
+              ? Center(child: Text("판매 상품이 없습니다."))
+              : ListView.builder(
+                  itemCount: bucketList.length, // bucketList 개수 만큼 보여주기
+                  itemBuilder: (context, index) {
+                    Bucket bucket =
+                        bucketList[index]; // index에 해당하는 bucket 가져오기
+                    return ListTile(
+                      // 판매리스트 이미지
+                      leading: Image.network(
+                        bucket.image,
+                      ),
+                      // 판매리스트 제목
+                      title: Text(bucket.title),
+                      // 판매리스트 위치
+                      subtitle: Text(bucket.location),
+                      onTap: () {
+                        // 판매리스트 상세페이지로 이동
+                        Navigator.pushNamed(context, PostDetailPage.routeName);
+                      },
+                    );
+                  },
+                ),
+          // 판매리스트 생성페이지로 이동
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () async {
+              // + 버튼 클릭시 버킷 생성 페이지로 이동
+              String? job = await Navigator.push(
                 context,
-                LoginPage.routeName,
-                (route) => false,
+                MaterialPageRoute(builder: (_) => CreatePostPage()),
               );
             },
-          )
-        ],
-      ),
-      body: bucketList.isEmpty
-          ? Center(child: Text("판매 상품이 없습니다."))
-          : ListView.builder(
-              itemCount: bucketList.length, // bucketList 개수 만큼 보여주기
-              itemBuilder: (context, index) {
-                Bucket bucket = bucketList[index]; // index에 해당하는 bucket 가져오기
-                return ListTile(
-                  // 판매리스트 이미지
-                  leading: Image.network(
-                    bucket.image,
-                  ),
-                  // 판매리스트 제목
-                  title: Text(bucket.title),
-                  // 판매리스트 위치
-                  subtitle: Text(bucket.location),
-                  onTap: () {
-                    // 판매리스트 상세페이지로 이동
-                    Navigator.pushNamed(context, PostDetailPage.routeName);
-                  },
-                );
-              },
-            ),
-      // 판매리스트 생성페이지로 이동
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          // + 버튼 클릭시 버킷 생성 페이지로 이동
-          String? job = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => CreatePostPage()),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
