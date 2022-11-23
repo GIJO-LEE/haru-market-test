@@ -47,7 +47,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
     final authService = context.read<AuthService>();
     final user = authService.currentUser()!; // 반드시 로그인 후, 해당 페이지로 오므로 ! 붙임
 
-    return Consumer<BucketService>(
+    return Consumer<PostService>(
       builder: (context, bucketService, child) {
         return Scaffold(
           appBar: AppBar(
@@ -101,7 +101,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       Icons.chevron_right_outlined,
                     ),
                     onPressed: () async {
-                      String _manufacturingCompany = await Navigator.push(
+                      String? _manufacturingCompany = await Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
@@ -109,8 +109,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       );
                       if ((_manufacturingCompany != null) &
                           (manufacturingCompany != _manufacturingCompany)) {
+                        print(_manufacturingCompany);
+                        print(_manufacturingCompany == null);
                         setState(() {
-                          manufacturingCompany = _manufacturingCompany;
+                          manufacturingCompany = _manufacturingCompany!;
                           series = '';
                           model = '';
                         });
@@ -135,7 +137,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           content: Text("제조사를 먼저 선택해주세요."),
                         ));
                       } else {
-                        String _series = await Navigator.push(
+                        String? _series = await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -143,7 +145,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         );
                         if ((_series != null) & (series != _series)) {
                           setState(() {
-                            series = _series;
+                            series = _series!;
                             model = '';
                           });
                         }
@@ -172,7 +174,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           content: Text("시리즈를 선택해주세요."),
                         ));
                       } else {
-                        String _model = await Navigator.push(
+                        String? _model = await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ModelsPage(
@@ -181,7 +183,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         );
                         if ((_model != null) & (model != _model)) {
                           setState(() {
-                            model = _model;
+                            model = _model!;
                           });
                         }
                       }

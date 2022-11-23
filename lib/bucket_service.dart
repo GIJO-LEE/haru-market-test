@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class BucketService extends ChangeNotifier {
-  final bucketCollection = FirebaseFirestore.instance.collection('bucket');
+class PostService extends ChangeNotifier {
+  final postCollection = FirebaseFirestore.instance.collection('post');
+
+  Future<QuerySnapshot> readAllPost() async {
+    return postCollection.get();
+  }
 
   Future<QuerySnapshot> read(String uid) async {
     // 내 bucketList 가져오기
@@ -24,7 +28,7 @@ class BucketService extends ChangeNotifier {
     DateTime endTime = currentTime.add(Duration(days: durationDays));
 
     // bucket 만들기
-    await bucketCollection.add({
+    await postCollection.add({
       'registerUserId': uid, // 포스트 등록 유저
       'location': location,
       'articleTitle': title, // 제목

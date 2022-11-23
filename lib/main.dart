@@ -21,7 +21,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
-        ChangeNotifierProvider(create: (context) => BucketService()),
+        ChangeNotifierProvider(create: (context) => PostService()),
       ],
       child: MyApp(),
     ),
