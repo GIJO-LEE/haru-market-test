@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
-import 'bucket_service.dart';
+import 'post_service.dart';
 import 'create_post_util_page.dart';
 
 // durations that can be selected
@@ -76,14 +76,14 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       Icons.chevron_right_outlined,
                     ),
                     onPressed: () async {
-                      String _location = await Navigator.push(
+                      String? _location = await Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const LocationPage()),
                       );
                       if (_location != null) {
                         setState(() {
-                          location = _location;
+                          location = _location!;
                         });
                       }
                     },
@@ -109,8 +109,6 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       );
                       if ((_manufacturingCompany != null) &
                           (manufacturingCompany != _manufacturingCompany)) {
-                        print(_manufacturingCompany);
-                        print(_manufacturingCompany == null);
                         setState(() {
                           manufacturingCompany = _manufacturingCompany!;
                           series = '';

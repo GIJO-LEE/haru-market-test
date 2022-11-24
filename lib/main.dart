@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
-import 'bucket_service.dart';
+import 'post_service.dart';
 import 'create_post_page.dart';
 import 'initial_page.dart';
 import 'post_detail_page.dart';
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
     LoginPage.routeName: (context) => LoginPage(),
     HomePage.routeName: (context) => HomePage(),
     CreatePostPage.routeName: (context) => CreatePostPage(),
-    PostDetailPage.routeName: (context) => PostDetailPage(),
+    // PostDetailPage.routeName: (context) => PostDetailPage(uid: '', postid: '',),
   };
 
   // Route? generateRoute(RouteSettings routeSettings) {

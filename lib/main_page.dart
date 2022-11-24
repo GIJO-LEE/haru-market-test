@@ -1,22 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:haru_market/bucket_service.dart';
+import 'package:haru_market/post_service.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
 import 'login_page.dart';
 import 'post_detail_page.dart';
 import 'create_post_page.dart';
-
-/// 버킷 클래스
-class Bucket {
-  String title; // 타이틀명
-  String location; // 판매자 위치
-  String image =
-      "https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP848/iphone13-pro-max-colors-480_2x.png";
-  Bucket(this.title, this.location); // 생성자
-}
 
 /// 메인 페이지
 class HomePage extends StatefulWidget {
@@ -29,11 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Bucket> bucketList = [
-    Bucket("10/20에 구매한 아이폰 13 Pro Max 팔아요", "강남구 신사동"),
-    Bucket("아이폰 13 mini 팔아요", "강남구 삼성동")
-  ]; // 전체 버킷리스트 목록
-
   final postCollection = PostService();
 
   // 삭제 확인 다이얼로그
@@ -55,11 +41,11 @@ class _HomePageState extends State<HomePage> {
             // 확인 버튼
             TextButton(
               onPressed: () {
-                setState(() {
-                  // index에 해당하는 항목 삭제
-                  bucketList.removeAt(index);
-                });
-                Navigator.pop(context);
+                // setState(() {
+                //   // index에 해당하는 항목 삭제
+                //   bucketList.removeAt(index);
+                // });
+                // Navigator.pop(context);
               },
               child: Text(
                 "확인",
@@ -74,6 +60,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // 굳이 BucketService 새로고침과 상관 없으므로 Consumer 위에 작성
+    final authService = context.read<AuthService>();
+    final user = authService.currentUser()!; // 반드시 로그인 후, 해당 페이지로 오므로 ! 붙임
     return Consumer<PostService>(
       builder: (context, postService, child) {
         return Scaffold(
@@ -107,47 +96,71 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          body: bucketList.isEmpty
-              ? Center(child: Text("판매 상품이 없습니다."))
-              : Container(
-                  child: FutureBuilder<QuerySnapshot>(
-                      future: postCollection.readAllPost(),
-                      builder: (context, snapshot) {
-                        final docs = snapshot.data?.docs ?? [];
-                        // docs[i].get('series')
-                        return ListView.separated(
+          body: Container(
+            child: FutureBuilder<QuerySnapshot>(
+                future: postCollection.readAllPost(),
+                builder: (context, snapshot) {
+                  final docs = snapshot.data?.docs ?? [];
+                  return docs.length == 0
+                      ? Center(child: Text("구매 가능한 상품이 없습니다."))
+                      : ListView.separated(
+                          padding: EdgeInsets.zero,
                           scrollDirection: Axis.vertical,
                           itemCount: docs.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               alignment: Alignment.center,
                               child: SizedBox(
-                                height: 30,
+                                height: 100,
                                 width: double.infinity,
                                 child: ListTile(
+                                  contentPadding: EdgeInsets.only(
+                                      left: 20, top: 010, right: 0, bottom: 0),
                                   // 판매리스트 이미지
-                                  leading: Image.network(
-                                    "https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP848/iphone13-pro-max-colors-480_2x.png",
+                                  // leading: Image.network(
+                                  //   "https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP848/iphone13-pro-max-colors-480_2x.png",
+                                  // ),
+                                  leading: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    child: Image.network(
+                                      "https://images.unsplash.com/photo-1616348436168-de43ad0db179?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80",
+                                      alignment: Alignment.center,
+                                      height: 100,
+                                    ),
                                   ),
                                   // 판매리스트 제목
-                                  title: Text(docs[index].get('articleTitle')),
+                                  title: Text(docs[index].get('articleTitle'),
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      )),
                                   // 판매리스트 위치
                                   subtitle: Text(docs[index].get('location')),
                                   onTap: () {
                                     // 판매리스트 상세페이지로 이동
-                                    Navigator.pushNamed(
-                                        context, PostDetailPage.routeName);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PostDetailPage(
+                                          uid: user.uid,
+                                          postid: docs[index].reference.id,
+                                        ),
+                                      ),
+                                    );
                                   },
                                 ),
                               ),
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
-                            return Divider(thickness: 1);
+                            return Divider(
+                              thickness: 1,
+                            );
                           },
                         );
-                      }),
-                ),
+                }),
+          ),
           // 판매리스트 생성페이지로 이동
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
