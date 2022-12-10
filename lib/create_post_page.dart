@@ -83,7 +83,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       );
                       if (_location != null) {
                         setState(() {
-                          location = _location!;
+                          location = _location;
                         });
                       }
                     },

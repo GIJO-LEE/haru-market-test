@@ -1,13 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:haru_market/post_service.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
 import 'login_page.dart';
+import 'login_page_copy.dart';
 import 'post_detail_page.dart';
 import 'create_post_page.dart';
+
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps._googleUsercontent.com',
+  scopes: <String>[
+    'email',
+    'profile',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
 
 /// 메인 페이지
 class HomePage extends StatefulWidget {
@@ -86,10 +98,11 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   // 로그아웃
                   context.read<AuthService>().signOut();
+                  // _googleSignIn.disconnect();
                   // 로그아웃 시 로그인 페이지로 이동
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    LoginPage.routeName,
+                    SignInDemo.routeName,
                     (route) => false,
                   );
                 },

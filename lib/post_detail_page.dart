@@ -71,16 +71,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
     String uid = widget.uid;
     String postid = widget.postid;
 
-    // final postDocument = FirebaseFirestore.instance.collection("post").doc(postid);
-    // final docRef = FirebaseFirestore.instance.collection("post").doc(postid);
-    // final data = docRef.get().then(
-    //   (DocumentSnapshot doc) {
-    //     final data = doc.data() as Map<String, dynamic>;
-    //     // print(data);
-    //   },
-    //   onError: (e) => print("Error getting document: $e"),
-    // );
-
     return Scaffold(
       appBar: AppBar(
         // 뒤로가기 버튼
@@ -110,151 +100,150 @@ class _PostDetailPageState extends State<PostDetailPage> {
           final post = snapshot.data;
           if (post == null) {
             return Text('no data');
-          } else {
-            return Column(
-              children: [
-                ////// 아이템 이미지 롤링
-                AspectRatio(
-                  aspectRatio: 12 / 4,
-                  child: ItemImgaeViewWidget(),
-                ),
-                ////// 판매자 정보
-                Card(
-                  child: ListTile(
-                    // 판매자 정보 : 프로필 사진
-                    leading: CircleAvatar(
-                      radius: 36,
-                      backgroundColor: Colors.white,
-                      // Image를 원 안에 제대로 들어가게 하기 위해 Padding으로 Wrapping!! (Good)
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.network(
-                          seller.profileImage,
-                          width: 62,
-                        ),
-                      ),
-                    ),
-                    // 판매자 정보 : 닉네임
-                    title: Text(seller.nickName),
-                    // 판매 위치 정보
-                    subtitle: Text(post.get('location')),
-                    // 판매 시작
-                    trailing: TimerBuilder.periodic(
-                      const Duration(seconds: 1),
-                      builder: (context) {
-                        // 함수 작성 후 return Text에 넣기!!
-                        return Text(
-                          calculateRemainTime(register_time),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                ////// 판매상품정보
-                // 제목
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
-                    post.get('articleTitle'),
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                // 상세정보 텍스트
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Text(
-                    '상세정보',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                // 상세정보 데이터 테이블
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Table(
-                    border: TableBorder.all(color: Colors.transparent),
-                    columnWidths: const <int, TableColumnWidth>{
-                      0: FixedColumnWidth(50),
-                      1: FlexColumnWidth(),
-                      // FlexColumnWidth(), IntrinsicColumnWidth()
-                    },
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: <TableRow>[
-                      TableRow(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('제조사'),
-                          ),
-                          Text(post.get('manufacturingCompany'))
-                        ],
-                      ),
-                      TableRow(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('시리즈'),
-                          ),
-                          Text(post.get('series'))
-                        ],
-                      ),
-                      TableRow(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            child: Text('모델명'),
-                          ),
-                          Text(post.get('modelName'))
-                        ],
-                      ),
-                      TableRow(
-                        children: <Widget>[
-                          Container(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text('용량')),
-                          Text('512GB(데이터X)')
-                        ],
-                      ),
-                      TableRow(
-                        children: <Widget>[
-                          Container(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text('색상')),
-                          Text('검정(데이터X)')
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      post.get('description'),
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              ],
-            );
           }
+          return Column(
+            children: [
+              ////// 아이템 이미지 롤링
+              AspectRatio(
+                aspectRatio: 12 / 4,
+                child: ItemImgaeViewWidget(),
+              ),
+              ////// 판매자 정보
+              Card(
+                child: ListTile(
+                  // 판매자 정보 : 프로필 사진
+                  leading: CircleAvatar(
+                    radius: 36,
+                    backgroundColor: Colors.white,
+                    // Image를 원 안에 제대로 들어가게 하기 위해 Padding으로 Wrapping!! (Good)
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network(
+                        seller.profileImage,
+                        width: 62,
+                      ),
+                    ),
+                  ),
+                  // 판매자 정보 : 닉네임
+                  title: Text(seller.nickName),
+                  // 판매 위치 정보
+                  subtitle: Text(post.get('location')),
+                  // 판매 시작
+                  trailing: TimerBuilder.periodic(
+                    const Duration(seconds: 1),
+                    builder: (context) {
+                      // 함수 작성 후 return Text에 넣기!!
+                      return Text(
+                        calculateRemainTime(register_time),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              ////// 판매상품정보
+              // 제목
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  post.get('articleTitle'),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              // 상세정보 텍스트
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  '상세정보',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              // 상세정보 데이터 테이블
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Table(
+                  border: TableBorder.all(color: Colors.transparent),
+                  columnWidths: const <int, TableColumnWidth>{
+                    0: FixedColumnWidth(50),
+                    1: FlexColumnWidth(),
+                    // FlexColumnWidth(), IntrinsicColumnWidth()
+                  },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: <TableRow>[
+                    TableRow(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text('제조사'),
+                        ),
+                        Text(post.get('manufacturingCompany'))
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text('시리즈'),
+                        ),
+                        Text(post.get('series'))
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Text('모델명'),
+                        ),
+                        Text(post.get('modelName'))
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Text('용량')),
+                        Text('512GB(데이터X)')
+                      ],
+                    ),
+                    TableRow(
+                      children: <Widget>[
+                        Container(
+                            padding: EdgeInsets.symmetric(vertical: 5),
+                            child: Text('색상')),
+                        Text('검정(데이터X)')
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    post.get('description'),
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
+            ],
+          );
         },
       ),
     );
