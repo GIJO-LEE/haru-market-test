@@ -7,12 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
 import 'auth_service.dart';
-import 'login_page_copy.dart';
+import 'login_page.dart';
 import 'post_service.dart';
 import 'create_post_page.dart';
 import 'initial_page.dart';
 import 'post_detail_page.dart';
-import 'login_page.dart';
+import 'login_page_email.dart';
 import 'main_page.dart';
 
 void main() async {
@@ -60,8 +60,8 @@ class MyApp extends StatelessWidget {
 
   final routes = {
     InitialPage.routeName: (context) => InitialPage(),
-    SignInDemo.routeName: (context) => SignInDemo(),
     LoginPage.routeName: (context) => LoginPage(),
+    LoginPageEmail.routeName: (context) => LoginPageEmail(),
     HomePage.routeName: (context) => HomePage(),
     CreatePostPage.routeName: (context) => CreatePostPage(),
     // PostDetailPage.routeName: (context) => PostDetailPage(uid: '', postid: '',),

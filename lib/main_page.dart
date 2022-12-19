@@ -6,8 +6,8 @@ import 'package:haru_market/post_service.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
+import 'login_page_email.dart';
 import 'login_page.dart';
-import 'login_page_copy.dart';
 import 'post_detail_page.dart';
 import 'create_post_page.dart';
 
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                   // 로그아웃 시 로그인 페이지로 이동
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    SignInDemo.routeName,
+                    LoginPage.routeName,
                     (route) => false,
                   );
                 },

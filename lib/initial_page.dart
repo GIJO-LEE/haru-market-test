@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'auth_service.dart';
+import 'login_page_email.dart';
 import 'login_page.dart';
-import 'login_page_copy.dart';
 import 'main_page.dart';
 
 class InitialPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _InitialPageState extends State<InitialPage> {
       await Future.delayed(Duration(seconds: 1));
       Navigator.pushNamedAndRemoveUntil(
         context,
-        user == null ? SignInDemo.routeName : HomePage.routeName,
+        user == null ? LoginPage.routeName : HomePage.routeName,
         (route) => false,
       );
     });
